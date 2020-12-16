@@ -95,5 +95,5 @@ public class CRUDTable<T> extends JPanel {
 			tableModel.addRow(values.toArray());
 		}
 	}
-x
+
 }
