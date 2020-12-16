@@ -1,13 +1,16 @@
 package main;
 
 import java.awt.EventQueue;
+import java.awt.desktop.SystemSleepEvent;
+
 import javax.swing.JFrame;
 
 import com.github.weisj.darklaf.LafManager;
 //import com.github.weisj.darklaf.theme.DarculaTheme;
 
+import api.ParkApi;
 import panels.RootPanel;
-
+import beans.Park;
 public class Main {
 
 	public static final int WINDOW_WIDTH = 800;
@@ -29,6 +32,7 @@ public class Main {
 
 	public Main() {
 		initialize();
+		System.out.println(ParkApi.getAllParks());
 	}
 
 	private void initialize() {

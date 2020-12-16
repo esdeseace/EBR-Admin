@@ -34,7 +34,7 @@
 	<classpathentry kind="lib" path="target/dependency/jaxb-api-2.3.0.jar"/>
 	<classpathentry kind="lib" path="target/dependency/jaxb-core-2.3.0.jar"/>
 	<classpathentry kind="lib" path="target/dependency/jaxb-impl-2.3.0.jar"/>
-	<classpathentry kind="lib" path="target/dependency/jersey-client-2.31.jar"/>
+	<classpathentry kind="lib" path="target/dependency/jersey-client-2.31.jar" sourcepath="target/dependency/jersey-client-2.31.jar"/>
 	<classpathentry kind="lib" path="target/dependency/jersey-common-2.31.jar"/>
 	<classpathentry kind="lib" path="target/dependency/jersey-entity-filtering-2.31.jar"/>
 	<classpathentry kind="lib" path="target/dependency/jersey-hk2-2.31.jar"/>
