@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface CRUD<T> {
+public interface IController<T> {
 	void onCreate();
 
 	void onRead(T t);
