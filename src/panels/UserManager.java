@@ -2,7 +2,6 @@ package panels;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -23,9 +22,10 @@ public class UserManager extends JPanel {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 
-		ArrayList<User> data = UserApi.getAllUsers();
+		CRUDTable<User> table = new CRUDTable<>(User.getFields());
 		UserController userController = new UserController();
-		CRUDTable<User> table = new CRUDTable<>(data, User.getFields(), userController);
+		table.setController(userController);
+		table.updateData(UserApi.getAll());
 
 		this.add(table, BorderLayout.CENTER);
 	}

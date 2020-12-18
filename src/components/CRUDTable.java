@@ -2,7 +2,6 @@ package components;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,15 +32,16 @@ public class CRUDTable<T> extends JPanel {
 	private LinkedHashMap<String, String> fields;
 	private ArrayList<String> columnNames;
 
-	private JButton createButton;
 	private JTable table;
 	private DefaultTableModel tableModel;
 
-	public CRUDTable(ArrayList<T> data, LinkedHashMap<String, String> fields, IController<T> callback) {
-		this.data = data;
-		this.callback = callback;
+	public CRUDTable(LinkedHashMap<String, String> fields) {
 		this.fields = fields;
 		initialize();
+	}
+
+	public void setController(IController<T> callback) {
+		this.callback = callback;
 	}
 
 	private void initialize() {
@@ -63,75 +63,34 @@ public class CRUDTable<T> extends JPanel {
 		columnNames.add(DELETE);
 
 		tableModel = new DefaultTableModel(null, columnNames.toArray());
-		table = new JTable(tableModel);
+		table = new JTable(tableModel) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				if (column >= columnNames.size() - 3)
+					return true;
+				return false;
+			};
+		};
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		this.add(new JScrollPane(table), BorderLayout.CENTER);
 
-		createButton = new JButton(CREATE);
+		JButton createButton = new JButton(CREATE);
+		createButton.addActionListener(new CreateEvent());
 		this.add(new JScrollPane(createButton), BorderLayout.NORTH);
-		createButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (callback != null) {
-					callback.onCreate();
-					updateData();
-				}
-			}
-		});
-
-		this.updateData();
-
-		this.addButtonToTable(READ, columnNames.size() - 3, new AbstractAction() {
-
-			private static final long serialVersionUID = 1L;
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-				T model = (T) tableModel.getValueAt(selectedRow, 0);
-				System.out.println(model);
-				callback.onRead(model);
-			}
-		});
-
-		this.addButtonToTable(UPDATE, columnNames.size() - 2, new AbstractAction() {
-
-			private static final long serialVersionUID = 1L;
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-				T model = (T) tableModel.getValueAt(selectedRow, 0);
-				System.out.println(model);
-				callback.onUpdate(model);
-			}
-		});
-
-		this.addButtonToTable(DELETE, columnNames.size() - 1, new AbstractAction() {
-
-			private static final long serialVersionUID = 1L;
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-				T model = (T) tableModel.getValueAt(selectedRow, 0);
-				System.out.println(model);
-				callback.onDelete(model);
-			}
-		});
-
+		this.addButtonCell(READ, columnNames.size() - 3, new ReadEvent());
+		this.addButtonCell(UPDATE, columnNames.size() - 2, new UpdateEvent());
+		this.addButtonCell(DELETE, columnNames.size() - 1, new DeleteEvent());
 	}
 
 	public void updateData() {
 		this.updateData(this.data);
 	}
 
-	public void updateData(ArrayList<T> datas) {
+	public void updateData(ArrayList<T> data) {
+		this.data = data;
 		Set<String> keys = fields.keySet();
 		for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
@@ -157,11 +116,59 @@ public class CRUDTable<T> extends JPanel {
 		}
 	}
 
-	private void addButtonToTable(String name, int position, Action action) {
-		TableButton buttonTable = new TableButton(name, action);
+	private void addButtonCell(String name, int position, Action action) {
+		ButtonCell buttonCell = new ButtonCell(name, action);
 		TableColumn column = table.getColumnModel().getColumn(position);
-		column.setCellRenderer(buttonTable.getButtonsRenderer());
-		column.setCellEditor(buttonTable.getButtonEditor(table));
+		buttonCell.setColumnButton(column);
+	}
+
+	private class CreateEvent extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			callback.onCreate();
+		}
+	}
+
+	private class UpdateEvent extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
+			Object model = tableModel.getValueAt(selectedRow, 0);
+			callback.onUpdate((T) model);
+		}
+	}
+
+	private class DeleteEvent extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
+			Object model = tableModel.getValueAt(selectedRow, 0);
+			callback.onDelete((T) model);
+		}
+	}
+
+	private class ReadEvent extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
+			Object model = tableModel.getValueAt(selectedRow, 0);
+			callback.onRead((T) model);
+		}
 	}
 
 }

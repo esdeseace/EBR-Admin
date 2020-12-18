@@ -11,8 +11,9 @@ import javax.ws.rs.core.Response;
 import beans.User;
 
 public class UserApi {
-	public static ArrayList<User> getAllUsers() {
-		WebTarget webTarget = Api.client.target(Api.PATH);
+
+	public static ArrayList<User> getAll() {
+		WebTarget webTarget = Api.client.target("https://my-json-server.typicode.com/nvthong99/fakeapi/users");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.get();
@@ -22,4 +23,13 @@ public class UserApi {
 
 		return res;
 	}
+
+	public boolean update(int id) {
+		return true;
+	}
+
+	public boolean delete(int id) {
+		return true;
+	}
+
 }

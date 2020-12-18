@@ -1,7 +1,7 @@
 package components;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,23 +16,21 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
-public class TableButton {
+public class ButtonCell {
 
 	private String buttonName;
 	private Action action;
 
-	public TableButton(String buttonName, Action action) {
+	public ButtonCell(String buttonName, Action action) {
 		this.buttonName = buttonName;
 		this.action = action;
 	}
 
-	public ButtonsRenderer getButtonsRenderer() {
-		return new ButtonsRenderer();
-	}
-
-	public ButtonEditor getButtonEditor(JTable table) {
-		return new ButtonEditor(table);
+	public void setColumnButton(TableColumn column) {
+		column.setCellRenderer(new ButtonsRenderer());
+		column.setCellEditor(new ButtonEditor());
 	}
 
 	private class ButtonsRenderer implements TableCellRenderer {
@@ -52,39 +50,6 @@ public class TableButton {
 		private static final long serialVersionUID = 1L;
 
 		private final ButtonPane panel = new ButtonPane();
-		private final JTable table;
-
-		private class EditingStopHandler extends MouseAdapter implements ActionListener {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				Object o = e.getSource();
-				if (o instanceof TableCellEditor) {
-					actionPerformed(null);
-				} else if (o instanceof JButton) {
-					ButtonModel m = ((JButton) e.getComponent()).getModel();
-					if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
-						panel.setBackground(table.getBackground());
-					}
-				}
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(() -> fireEditingStopped());
-			}
-		}
-
-		protected ButtonEditor(JTable table) {
-
-			this.table = table;
-
-			EditingStopHandler handler = new EditingStopHandler();
-			panel.button.addMouseListener(handler);
-			panel.button.addActionListener(handler);
-			panel.button.setAction(action);
-			panel.addMouseListener(handler);
-		}
 
 		@Override
 		public Component getTableCellEditorComponent(JTable tbl, Object value, boolean isSelected, int row,
@@ -109,13 +74,14 @@ public class TableButton {
 		public ButtonPane() {
 
 			setOpaque(true);
-//			setBorder(new EmptyBorder(5, 5, 5, 5));
+			setLayout(new BorderLayout());
 
 			button = new JButton(buttonName);
 			button.setFont(new Font("Calibri", Font.BOLD, 17));
 			button.setFocusable(false);
 			button.setRolloverEnabled(false);
-			add(button);
+			button.setAction(action);
+			add(button, BorderLayout.CENTER);
 		}
 	}
 }
