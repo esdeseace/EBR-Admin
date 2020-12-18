@@ -2,6 +2,7 @@ package api;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -13,19 +14,35 @@ import beans.User;
 public class UserApi {
 
 	public static ArrayList<User> getAll() {
-		WebTarget webTarget = Api.client.target("https://my-json-server.typicode.com/nvthong99/fakeapi/users");
+		try {
+			WebTarget webTarget = Api.client.target("https://my-json-server.typicode.com/nvthong99/fakeapi/users");
 
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
+			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+			Response response = invocationBuilder.get();
 
-		ArrayList<User> res = response.readEntity(new GenericType<ArrayList<User>>() {
-		});
+			ArrayList<User> res = response.readEntity(new GenericType<ArrayList<User>>() {
+			});
 
-		return res;
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 
-	public boolean update(int id) {
-		return true;
+	public User update(User user) {
+		try {
+			WebTarget webTarget = Api.client.target(Api.PATH).path("books").path(user.getId());
+
+			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+			Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+			User res = response.readEntity(User.class);
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public boolean delete(int id) {
