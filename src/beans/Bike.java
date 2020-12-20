@@ -13,19 +13,19 @@ public class Bike {
 	private String idPark;
 	private String idUser;
 	private String type;
-	private float weight;
+	private int weight;
 	private String license_plate;
-	private Time manu_date;
-	private Time rented_date;
-	private Time return_date;
+	private String manu_date;
+	private String rented_date;
+	private String return_date;
 	private String producer;
 	private int cost;
-	private String status;
+	private int status;
 	private String created_at;
 	private String updated_at;
 	
-	public Bike(String id, String name, String type, float weight, String license_plate, Time manu_date,
-			Time rented_date, Time return_date, String producer, int cost, String status, String created_at,
+	public Bike(String id, String name, String type, int weight, String license_plate, String manu_date,
+			String rented_date, String return_date, String producer, int cost, int status, String created_at,
 			String updated_at) {
 		super();
 		this.id = id;
@@ -101,11 +101,11 @@ public class Bike {
 		this.type = type;
 	}
 
-	public float getWeight() {
+	public int getWeight() {
 		return weight;
 	}
 
-	public void setWeight(float weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 	public String getLicense_plate() {
@@ -114,22 +114,22 @@ public class Bike {
 	public void setLicense_plate(String license_plate) {
 		this.license_plate = license_plate;
 	}
-	public Time getManu_date() {
+	public String getManu_date() {
 		return manu_date;
 	}
-	public void setManu_date(Time manu_date) {
+	public void setManu_date(String manu_date) {
 		this.manu_date = manu_date;
 	}
-	public Time getRented_date() {
+	public String getRented_date() {
 		return rented_date;
 	}
-	public void setRented_date(Time rented_date) {
+	public void setRented_date(String rented_date) {
 		this.rented_date = rented_date;
 	}
-	public Time getReturn_date() {
+	public String getReturn_date() {
 		return return_date;
 	}
-	public void setReturn_date(Time return_date) {
+	public void setReturn_date(String return_date) {
 	}
 
 	public String getProducer() {
@@ -148,11 +148,11 @@ public class Bike {
 		this.cost = cost;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public String getCreated_at() {

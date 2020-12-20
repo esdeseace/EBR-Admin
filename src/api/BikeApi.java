@@ -9,18 +9,18 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.User;
+import beans.Bike;
 
-public class UserApi {
+public class BikeApi {
 
-	public static ArrayList<User> getAll() {
+	public static ArrayList<Bike> getAll() {
 		try {
-			WebTarget webTarget = Api.client.target("https://eco-bike.herokuapp.com/api/users");
+			WebTarget webTarget = Api.client.target("https://eco-bike.herokuapp.com/api/bikes");
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 			Response response = invocationBuilder.get();
 
-			ArrayList<User> res = response.readEntity(new GenericType<ArrayList<User>>() {
+			ArrayList<Bike> res = response.readEntity(new GenericType<ArrayList<Bike>>() {
 			});
 
 			return res;
@@ -30,14 +30,14 @@ public class UserApi {
 		}
 	}
 
-	public User update(User user) {
+	public Bike update(Bike bike) {
 		try {
-			WebTarget webTarget = Api.client.target(Api.PATH).path("books").path(user.getId());
+			WebTarget webTarget = Api.client.target(Api.PATH).path("books").path(bike.getId());
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-			Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+			Response response = invocationBuilder.post(Entity.entity(bike, MediaType.APPLICATION_JSON));
 
-			User res = response.readEntity(User.class);
+			Bike res = response.readEntity(Bike.class);
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
