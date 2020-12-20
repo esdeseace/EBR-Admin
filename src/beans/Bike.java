@@ -10,8 +10,8 @@ public class Bike {
 	
 	private String id;
 	private String name;
-	private String idPark;
-	private String idUser;
+//	private String idPark;
+//	private String idUser;
 	private String type;
 	private int weight;
 	private String license_plate;
@@ -24,6 +24,9 @@ public class Bike {
 	private String created_at;
 	private String updated_at;
 	
+	public Bike() {
+		super();
+	}
 	public Bike(String id, String name, String type, int weight, String license_plate, String manu_date,
 			String rented_date, String return_date, String producer, int cost, int status, String created_at,
 			String updated_at) {
@@ -41,6 +44,7 @@ public class Bike {
 		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
+		
 	}
 
 	public static LinkedHashMap<String, String> getFields() {
@@ -77,21 +81,21 @@ public class Bike {
 		this.name = name;
 	}
 
-	public String getIdPark() {
-		return idPark;
-	}
-
-	public void setIdPark(String idPark) {
-		this.idPark = idPark;
-	}
-
-	public String getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(String idUser) {
-		this.idUser = idUser;
-	}
+//	public String getIdPark() {
+//		return idPark;
+//	}
+//
+//	public void setIdPark(String idPark) {
+//		this.idPark = idPark;
+//	}
+//
+//	public String getIdUser() {
+//		return idUser;
+//	}
+//
+//	public void setIdUser(String idUser) {
+//		this.idUser = idUser;
+//	}
 
 	public String getType() {
 		return type;
