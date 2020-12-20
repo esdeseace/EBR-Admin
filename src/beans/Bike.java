@@ -3,37 +3,44 @@ package beans;
 import java.sql.Time;
 import java.util.LinkedHashMap;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("bike")
 public class Bike {
 	
-
 	private String id;
 	private String name;
 	private String idPark;
 	private String idUser;
 	private String type;
 	private float weight;
-	private String licensePlate;
-	private Time manuDate;
-	private Time rentedDate;
-	private Time returnDate;
+	private String license_plate;
+	private Time manu_date;
+	private Time rented_date;
+	private Time return_date;
 	private String producer;
 	private int cost;
 	private String status;
+	private String created_at;
+	private String updated_at;
 	
-	
-	public Bike(String id, String name, String type, float weight, String licensePlate, Time manuDate,
-			Time rentedDate, Time returnDate, String producer, int cost) {
+	public Bike(String id, String name, String type, float weight, String license_plate, Time manu_date,
+			Time rented_date, Time return_date, String producer, int cost, String status, String created_at,
+			String updated_at) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.weight = weight;
-		this.licensePlate = licensePlate;
-		this.manuDate = manuDate;
-		this.rentedDate = rentedDate;
-		this.returnDate = returnDate;
+		this.license_plate = license_plate;
+		this.manu_date = manu_date;
+		this.rented_date = rented_date;
+		this.return_date = return_date;
 		this.producer = producer;
 		this.cost = cost;
+		this.status = status;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
 	}
 	public static LinkedHashMap<String, String> getFields() {
 		LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
@@ -41,11 +48,15 @@ public class Bike {
 		fields.put("name", "Tên xe");
 		fields.put("type", "Loại xe");
 		fields.put("weight", "Cân nặng");
-		fields.put("licensePlate", "Biển số");
-		fields.put("manuDate", "Ngày sản xuất");
+		fields.put("license_plate", "Biển số");
+		fields.put("manu_date", "Ngày sản xuất");
+//		fields.put("rented_date", "Ngày thuê");
+//		fields.put("return_date", "Ngày trả");
 		fields.put("producer", "Nhà sản xuất");
-		fields.put("cost", "Giá xe");
-
+		fields.put("cost", "Giá");
+		fields.put("status", "Trạng thái");
+//		fields.put("created_at", "created");
+//		fields.put("updated_at", "updated");
 		return fields;
 	}
 	
@@ -85,29 +96,29 @@ public class Bike {
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
-	public String getLicensePlate() {
-		return licensePlate;
+	public String getLicense_plate() {
+		return license_plate;
 	}
-	public void setLicensePlate(String licensePlate) {
-		this.licensePlate = licensePlate;
+	public void setLicense_plate(String license_plate) {
+		this.license_plate = license_plate;
 	}
-	public Time getManuDate() {
-		return manuDate;
+	public Time getManu_date() {
+		return manu_date;
 	}
-	public void setManuDate(Time manuDate) {
-		this.manuDate = manuDate;
+	public void setManu_date(Time manu_date) {
+		this.manu_date = manu_date;
 	}
-	public Time getRentedDate() {
-		return rentedDate;
+	public Time getRented_date() {
+		return rented_date;
 	}
-	public void setRentedDate(Time rentedDate) {
-		this.rentedDate = rentedDate;
+	public void setRented_date(Time rented_date) {
+		this.rented_date = rented_date;
 	}
-	public Time getReturnDate() {
-		return returnDate;
+	public Time getReturn_date() {
+		return return_date;
 	}
-	public void setReturnDate(Time returnDate) {
-		this.returnDate = returnDate;
+	public void setReturn_date(Time return_date) {
+		this.return_date = return_date;
 	}
 	public String getProducer() {
 		return producer;
@@ -127,9 +138,17 @@ public class Bike {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	
-	
-
+	public String getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(String created_at) {
+		this.created_at = created_at;
+	}
+	public String getUpdated_at() {
+		return updated_at;
+	}
+	public void setUpdated_at(String updated_at) {
+		this.updated_at = updated_at;
+	}
 
 }

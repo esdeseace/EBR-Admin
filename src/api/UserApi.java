@@ -12,7 +12,7 @@ import beans.User;
 
 public class UserApi {
 	public static ArrayList<User> getAllUsers() {
-		WebTarget webTarget = Api.client.target(Api.PATH);
+		WebTarget webTarget = Api.client.target("https://eco-bike.herokuapp.com/api/users");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.get();
