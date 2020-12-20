@@ -1,10 +1,8 @@
 package interfaces;
 
-import java.util.ArrayList;
-
 public interface IController<T> {
 
-	void onCreate();
+	void onCreate(T t);
 
 	void onRead(T t);
 

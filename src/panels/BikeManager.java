@@ -22,11 +22,11 @@ public class BikeManager extends JPanel {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 
-		CRUDTable<Bike> table = new CRUDTable<>(Bike.getFields());
-		BikeController bikeController = new BikeController();
-		table.setController(bikeController);
-		table.updateData(BikeApi.getAll());
+//		CRUDTable<Bike> table = new CRUDTable<>(Bike.getFields());
+//		BikeController bikeController = new BikeController();
+//		table.setController(bikeController);
+//		table.updateData(BikeApi.getAll());
 
-		this.add(table, BorderLayout.CENTER);
+//		this.add(table, BorderLayout.CENTER);
 	}
 }

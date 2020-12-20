@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import api.UserApi;
 import beans.User;
-import dialog.UpdateDialog;
 import interfaces.IController;
 
 public class UserController implements IController<User> {
 
 	@Override
-	public void onCreate() {
+	public void onCreate(User user) {
 
 	}
 

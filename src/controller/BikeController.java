@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import api.BikeApi;
 import beans.Bike;
-import dialog.UpdateDialog;
 import interfaces.IController;
 
 public class BikeController implements IController<Bike> {
 
 	@Override
-	public void onCreate() {
+	public void onCreate(Bike bike) {
 
 	}
 

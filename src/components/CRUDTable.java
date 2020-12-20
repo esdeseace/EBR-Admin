@@ -1,13 +1,11 @@
 package components;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,17 +14,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import interfaces.IController;
+import common.Constants;
 
 public class CRUDTable<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
-
-	private final String CREATE = "Thêm";
-	private final String READ = "Chi tiết";
-	private final String UPDATE = "Sửa";
-	private final String DELETE = "Xóa";
-
-	private IController<T> callback;
 
 	private ArrayList<T> data;
 	private LinkedHashMap<String, String> fields;
@@ -37,14 +28,9 @@ public class CRUDTable<T> extends JPanel {
 
 	public CRUDTable(LinkedHashMap<String, String> fields) {
 		this.fields = fields;
-		initialize();
 	}
 
-	public void setController(IController<T> callback) {
-		this.callback = callback;
-	}
-
-	private void initialize() {
+	public void initialize(ArrayList<String> buttonNames, ArrayList<Action> events, Action createEvent) {
 
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
@@ -58,31 +44,39 @@ public class CRUDTable<T> extends JPanel {
 			this.columnNames.add(name);
 		}
 
-		columnNames.add(READ);
-		columnNames.add(UPDATE);
-		columnNames.add(DELETE);
+		final int size = this.columnNames.size();
+
+		for (String name : buttonNames) {
+			this.columnNames.add(name);
+		}
 
 		tableModel = new DefaultTableModel(null, columnNames.toArray());
 		table = new JTable(tableModel) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
-				if (column >= columnNames.size() - 3)
+				if (column >= size)
 					return true;
 				return false;
 			};
 		};
-		table.getColumnModel().getColumn(0).setMinWidth(0);
+
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		this.add(new JScrollPane(table), BorderLayout.CENTER);
 
-		JButton createButton = new JButton(CREATE);
-		createButton.addActionListener(new CreateEvent());
-		this.add(new JScrollPane(createButton), BorderLayout.NORTH);
+		if (createEvent != null) {
+			JButton createButton = new JButton(Constants.CREATE);
+			createButton.addActionListener(createEvent);
+			this.add(new JScrollPane(createButton), BorderLayout.NORTH);
+		}
 
-		this.addButtonCell(READ, columnNames.size() - 3, new ReadEvent());
-		this.addButtonCell(UPDATE, columnNames.size() - 2, new UpdateEvent());
-		this.addButtonCell(DELETE, columnNames.size() - 1, new DeleteEvent());
+		for (String name : buttonNames) {
+			this.columnNames.add(name);
+		}
+
+		for (int i = 0; i < events.size(); i++) {
+			this.addButtonCell(buttonNames.get(0), size + i, events.get(i));
+		}
 	}
 
 	public void updateData() {
@@ -96,16 +90,16 @@ public class CRUDTable<T> extends JPanel {
 			tableModel.removeRow(i);
 		}
 
-		for (T model : data) {
+		for (T bean : data) {
 			ArrayList<Object> values = new ArrayList<>();
-			values.add(model);
+			values.add(bean);
 
 			for (String key : keys) {
 				try {
-					Field field = model.getClass().getDeclaredField(key);
+					Field field = bean.getClass().getDeclaredField(key);
 					field.setAccessible(true);
 
-					Object value = field.get(model);
+					Object value = field.get(bean);
 					values.add(value);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -122,53 +116,10 @@ public class CRUDTable<T> extends JPanel {
 		buttonCell.setColumnButton(column);
 	}
 
-	private class CreateEvent extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			callback.onCreate();
-		}
-	}
-
-	private class UpdateEvent extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-			Object model = tableModel.getValueAt(selectedRow, 0);
-			callback.onUpdate((T) model);
-		}
-	}
-
-	private class DeleteEvent extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-			Object model = tableModel.getValueAt(selectedRow, 0);
-			callback.onDelete((T) model);
-		}
-	}
-
-	private class ReadEvent extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
-			Object model = tableModel.getValueAt(selectedRow, 0);
-			callback.onRead((T) model);
-		}
+	public Object getSelectedBean() {
+		int selectedRow = table.convertRowIndexToModel(table.getEditingRow());
+		Object bean = tableModel.getValueAt(selectedRow, 0);
+		return bean;
 	}
 
 }

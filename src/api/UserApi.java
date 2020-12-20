@@ -10,12 +10,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.User;
+import common.Constants;
 
 public class UserApi {
 
 	public static ArrayList<User> getAll() {
 		try {
-			WebTarget webTarget = Api.client.target("https://eco-bike.herokuapp.com/api/users");
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 			Response response = invocationBuilder.get();
@@ -32,7 +33,7 @@ public class UserApi {
 
 	public User update(User user) {
 		try {
-			WebTarget webTarget = Api.client.target(Api.PATH).path("books").path(user.getId());
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("books").path(user.getId());
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 			Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));

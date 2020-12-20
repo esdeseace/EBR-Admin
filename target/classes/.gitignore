@@ -1,8 +1,11 @@
+/META-INF/
 /beans/
+/common/
+/main/
 /api/
 /controller/
-/panels/
-/components/
 /dialog/
+/components/
+/panels/
 /interfaces/
-/main/
+/helpers/
