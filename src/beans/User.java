@@ -63,15 +63,15 @@ public class User {
 		fields.put("name", "Họ tên");
 		fields.put("username", "Tài khảo");
 //		fields.put("password", "Mật khẩu");
-		fields.put("balance", "Số dư");
+		fields.put("money", "Số dư");
 		return fields;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -99,18 +99,18 @@ public class User {
 		this.password = password;
 	}
 
-	public int getBalance() {
-		return balance;
+	public int getMoney() {
+		return money;
 	}
 
-	public void setBalance(int balance) {
-		this.balance = balance;
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", balance="
-				+ balance + "]";
+		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", money="
+				+ money + "]";
 	}
 
 }

@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import com.github.weisj.darklaf.LafManager;
 //import com.github.weisj.darklaf.theme.DarculaTheme;
 
-import panels.RootPanel;
+import panels.RootPane;
 
 public class Main {
 
@@ -38,8 +38,8 @@ public class Main {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setTitle("EBR-Admin");
 
-		RootPanel rootPanel = new RootPanel();
-		frame.setContentPane(rootPanel);
+		RootPane rootPane = new RootPane();
+		frame.setContentPane(rootPane);
 		frame.setVisible(true);
 	}
 }

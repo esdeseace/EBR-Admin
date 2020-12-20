@@ -5,10 +5,10 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class RootPanel extends JPanel {
+public class RootPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	public RootPanel() {
+	public RootPane() {
 		super();
 		initialize();
 	}
@@ -20,9 +20,7 @@ public class RootPanel extends JPanel {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		this.add(tabbedPane, BorderLayout.CENTER);
 
-		tabbedPane.addTab("Compact Discs", null, new ParkManager(), "Quản lý bãi xe");
-		tabbedPane.addTab("Xe đang sử dụng", null, new UsedBikeManager(), "Quản lý xe đang sử dụng");
-		tabbedPane.addTab("Digital Video Discs", null, new UserManager(), "Quản lý người dùng");
+		tabbedPane.addTab("Digital Video Discs", null, new UserManager(), "Quáº£n lÃ½ ngÆ°á»�i dÃ¹ng");
 
 	}
 

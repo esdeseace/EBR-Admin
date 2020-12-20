@@ -1,32 +1,34 @@
 package controller;
 
+import java.util.ArrayList;
+
+import api.UserApi;
 import beans.User;
+import dialog.UpdateDialog;
 import interfaces.IController;
 
 public class UserController implements IController<User> {
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onRead(User t) {
-		// TODO Auto-generated method stub
-
+	public void onRead(User user) {
+		System.out.println(user);
 	}
 
 	@Override
-	public void onUpdate(User t) {
-		// TODO Auto-generated method stub
-
+	public void onUpdate(User user) {
+		System.out.println(user);
+//		UpdateDialog updateDialog = new UpdateDialog();
+//		updateDialog.setVisible(true);
 	}
 
 	@Override
-	public void onDelete(User t) {
-		// TODO Auto-generated method stub
-
+	public void onDelete(User user) {
+		System.out.println(user);
 	}
 
 }

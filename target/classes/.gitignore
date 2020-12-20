@@ -1,8 +1,10 @@
-/api/
-/beans/
 /components/
+/beans/
+/main/
+/panels/
+/abstracts/
+/api/
 /controller/
 /interfaces/
-/main/
-/models/
-/panels/
+/META-INF/
+/dialog/

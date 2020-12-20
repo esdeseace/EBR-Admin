@@ -42,6 +42,7 @@ public class Bike {
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
+
 	public static LinkedHashMap<String, String> getFields() {
 		LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 		fields.put("id", "id");
@@ -59,40 +60,51 @@ public class Bike {
 //		fields.put("updated_at", "updated");
 		return fields;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getIdPark() {
 		return idPark;
 	}
+
 	public void setIdPark(String idPark) {
 		this.idPark = idPark;
 	}
+
 	public String getIdUser() {
 		return idUser;
 	}
+
 	public void setIdUser(String idUser) {
 		this.idUser = idUser;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public float getWeight() {
 		return weight;
 	}
+
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
@@ -118,23 +130,28 @@ public class Bike {
 		return return_date;
 	}
 	public void setReturn_date(Time return_date) {
-		this.return_date = return_date;
 	}
+
 	public String getProducer() {
 		return producer;
 	}
+
 	public void setProducer(String producer) {
 		this.producer = producer;
 	}
+
 	public int getCost() {
 		return cost;
 	}
+
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
