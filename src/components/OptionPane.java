@@ -1,4 +1,4 @@
-package dialog;
+package components;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -12,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -25,14 +24,14 @@ import javax.swing.border.EmptyBorder;
 
 import helpers.FieldOption;
 
-public class Dialog<T> extends JDialog {
-
-	private static final long serialVersionUID = 1L;
+public class OptionPane<T> {
 
 	private ArrayList<FieldOption> fields;
 	private LinkedHashMap<String, JComponent> textFields;
+	private JDialog dialog;
+	private LinkedHashMap<String, String> values = null;
 
-	public Dialog(ArrayList<FieldOption> fields) {
+	public OptionPane(ArrayList<FieldOption> fields) {
 		super();
 		this.fields = fields;
 		this.textFields = new LinkedHashMap<>();
@@ -40,21 +39,22 @@ public class Dialog<T> extends JDialog {
 
 	public void initialize(String bannerText, String buttonText) {
 		JPanel contentPane = new JPanel();
+		dialog = new JDialog();
 		contentPane.setBorder(new EmptyBorder(40, 40, 40, 40));
 
 		BorderLayout layout = new BorderLayout();
 		contentPane.setLayout(layout);
-		setContentPane(contentPane);
+		dialog.setContentPane(contentPane);
 
 		JLabel banner = new JLabel(bannerText, SwingConstants.CENTER);
 		banner.setBorder(new EmptyBorder(0, 0, 10, 0));
 		banner.setFont(new Font(banner.getFont().getName(), Font.PLAIN, 20));
-		this.add(banner, BorderLayout.NORTH);
+		dialog.add(banner, BorderLayout.NORTH);
 
 		GridBagLayout gbLayout = new GridBagLayout();
 		JPanel panel = new JPanel();
 		panel.setLayout(gbLayout);
-		this.add(panel, BorderLayout.CENTER);
+		dialog.add(panel, BorderLayout.CENTER);
 		GridBagConstraints c = new GridBagConstraints();
 
 		for (int index = 0; index < fields.size(); index++) {
@@ -85,10 +85,10 @@ public class Dialog<T> extends JDialog {
 		JButton button = new JButton(buttonText);
 		button.setBorder(new EmptyBorder(20, 0, 0, 0));
 		button.addActionListener(new Event());
-		this.add(button, BorderLayout.SOUTH);
+		dialog.add(button, BorderLayout.SOUTH);
 
-		this.pack();
-		this.setLocationRelativeTo(null);
+		dialog.pack();
+		dialog.setLocationRelativeTo(null);
 	}
 
 	public void updateDate(T data) {
@@ -111,11 +111,18 @@ public class Dialog<T> extends JDialog {
 		}
 	}
 
+	public LinkedHashMap<String, String> showDialog() {
+		dialog.setModal(true);
+		dialog.setVisible(true);
+		return values;
+	}
+
 	private class Event extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			values = new LinkedHashMap<>();
 			Set<String> keys = textFields.keySet();
 			for (String key : keys) {
 				JComponent component = textFields.get(key);
@@ -125,8 +132,9 @@ public class Dialog<T> extends JDialog {
 				} else if (component instanceof JPasswordField) {
 					value = String.valueOf(((JPasswordField) component).getPassword());
 				}
-				System.out.println(value);
+				values.put(key, value);
 			}
+			dialog.setVisible(false);
 		}
 	}
 }

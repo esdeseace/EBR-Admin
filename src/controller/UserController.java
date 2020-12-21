@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
-import api.UserApi;
 import beans.User;
 import interfaces.IController;
 
@@ -10,7 +7,7 @@ public class UserController implements IController<User> {
 
 	@Override
 	public void onCreate(User user) {
-
+		System.out.println(user);
 	}
 
 	@Override
@@ -21,8 +18,6 @@ public class UserController implements IController<User> {
 	@Override
 	public void onUpdate(User user) {
 		System.out.println(user);
-//		UpdateDialog updateDialog = new UpdateDialog();
-//		updateDialog.setVisible(true);
 	}
 
 	@Override

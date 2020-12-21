@@ -30,7 +30,7 @@ public class CRUDTable<T> extends JPanel {
 		this.fields = fields;
 	}
 
-	public void initialize(ArrayList<String> buttonNames, ArrayList<Action> events, Action createEvent) {
+	public void initialize(LinkedHashMap<String, Action> events, Action createEvent) {
 
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
@@ -46,6 +46,7 @@ public class CRUDTable<T> extends JPanel {
 
 		final int size = this.columnNames.size();
 
+		Set<String> buttonNames = events.keySet();
 		for (String name : buttonNames) {
 			this.columnNames.add(name);
 		}
@@ -70,12 +71,9 @@ public class CRUDTable<T> extends JPanel {
 			this.add(new JScrollPane(createButton), BorderLayout.NORTH);
 		}
 
+		int index = 0;
 		for (String name : buttonNames) {
-			this.columnNames.add(name);
-		}
-
-		for (int i = 0; i < events.size(); i++) {
-			this.addButtonCell(buttonNames.get(0), size + i, events.get(i));
+			this.addButtonCell(name, size + index++, events.get(name));
 		}
 	}
 
