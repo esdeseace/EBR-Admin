@@ -27,6 +27,7 @@ public class ParkManager extends JPanel {
 	private ParkController parkController;
 	private OptionPane<Park> updateDialog;
 	private OptionPane<Park> createDialog;
+	private ParkApi parkApi;
 
 	public ParkManager() {
 		super();
@@ -45,8 +46,9 @@ public class ParkManager extends JPanel {
 		table = new CRUDTable<>(Park.getFields());
 		table.initialize(events, new CreateEvent());
 
-		parkController = new ParkController(table);
-		table.updateData(ParkApi.getAll());
+		parkApi = new ParkApi();
+		parkController = new ParkController(table, parkApi);
+		table.updateData(parkApi.getAll());
 
 		updateDialog = new OptionPane<>(Park.getUpdateFields());
 		updateDialog.initialize("Cập nhật bãi xe", "Cập nhật");

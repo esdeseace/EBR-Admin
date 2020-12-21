@@ -24,6 +24,7 @@ public class UserManager extends JPanel {
 	private UserController userController;
 	private OptionPane<User> updateDialog;
 	private OptionPane<User> createDialog;
+	private UserApi userApi;
 
 	public UserManager() {
 		super();
@@ -41,8 +42,9 @@ public class UserManager extends JPanel {
 		table = new CRUDTable<>(User.getFields());
 		table.initialize(events, new CreateEvent());
 
-		userController = new UserController(table);
-		table.updateData(UserApi.getAll());
+		userApi = new UserApi();
+		userController = new UserController(table, userApi);
+		table.updateData(userApi.getAll());
 
 		updateDialog = new OptionPane<>(User.getUpdateFields());
 		updateDialog.initialize("Cập nhật người dùng", "Cập nhật");

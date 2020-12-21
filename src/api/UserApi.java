@@ -12,10 +12,11 @@ import javax.ws.rs.core.Response;
 import beans.ResponseCustom;
 import beans.User;
 import common.Constants;
+import interfaces.IApi;
 
-public class UserApi {
+public class UserApi implements IApi<User> {
 
-	public static ArrayList<User> getAll() {
+	public ArrayList<User> getAll() {
 		try {
 			WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
 
@@ -32,7 +33,7 @@ public class UserApi {
 		}
 	}
 
-	public static User add(User user) {
+	public User add(User user) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -46,7 +47,7 @@ public class UserApi {
 		return null;
 	}
 
-	public static User update(User user) {
+	public User update(User user) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(user.getId());
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -59,9 +60,9 @@ public class UserApi {
 		return null;
 	}
 
-	public static boolean delete(String id) {
-		System.out.println(id);
-		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(id);
+	public boolean delete(User user) {
+		System.out.println(user);
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(user.getId());
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.delete();

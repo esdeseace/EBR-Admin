@@ -12,9 +12,11 @@ import javax.ws.rs.core.Response;
 import beans.Park;
 import beans.ResponseCustom;
 import common.Constants;
+import interfaces.IApi;
 
-public class ParkApi {
-	public static ArrayList<Park> getAll() {
+public class ParkApi implements IApi<Park> {
+
+	public ArrayList<Park> getAll() {
 		WebTarget webTarget = Constants.client.target("https://my-json-server.typicode.com/nvthong99/fakeapi/parks");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -25,7 +27,7 @@ public class ParkApi {
 		return res;
 	}
 
-	public static Park add(Park park) {
+	public Park add(Park park) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -39,7 +41,7 @@ public class ParkApi {
 		return null;
 	}
 
-	public static Park update(Park park) {
+	public Park update(Park park) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks").path(park.getId());
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -52,8 +54,8 @@ public class ParkApi {
 		return null;
 	}
 
-	public static boolean delete(String id) {
-		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks").path(id);
+	public boolean delete(Park park) {
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks").path(park.getId());
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.delete();
