@@ -5,75 +5,73 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-
-import org.glassfish.jersey.spi.Contract;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import api.ParkApi;
 
-
-import api.UserApi;
+import beans.Park;
 import beans.User;
 import common.Constants;
 import components.CRUDTable;
 import components.OptionPane;
-import controller.UserController;
+import controller.ParkController;
 
-public class UserManager extends JPanel {
+
+
+
+
+
+public class ParkManager extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private CRUDTable<User> table;
-	private UserController userController;
-	private OptionPane<User> updateDialog;
-	private OptionPane<User> createDialog;
+	private ParkController parkController;
+	private OptionPane<Park> updateDialog;
+	private OptionPane<Park> createDialog;
 
-	public UserManager() {
+	
+	public ParkManager() {
 		super();
 		initialize();
 	}
-
 	private void initialize() {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 
-
-		ArrayList<User> data = UserApi.getAll();
-		UserController userController = new UserController();
-		CRUDTable<User> table = new CRUDTable<User>(User.getFields());
+		ArrayList<Park> data = ParkApi.getAllParks();
+		ParkController parkController = new ParkController();
+		CRUDTable<Park> table = new CRUDTable<>( Park.getFields());
 //		System.out.println(data);
 
 		ArrayList<String> names = new ArrayList<>();
 		names.add(Constants.UPDATE);
 		names.add(Constants.DELETE);
 
-		
-
 		LinkedHashMap<String, Action> events = new LinkedHashMap<>();
 		events.put(Constants.UPDATE, new UpdateEvent());
 		events.put(Constants.DELETE, new DeleteEvent());
 
-		table = new CRUDTable<>(User.getFields());
+		table = new CRUDTable<>(Park.getFields());
 		table.initialize(events, new CreateEvent());
 
-		userController = new UserController();
-		table.updateData(UserApi.getAll());
+		parkController = new ParkController();
+		table.updateData(ParkApi.getAllParks());
 
 		updateDialog = new OptionPane<>(User.getUpdateFields());
-		updateDialog.initialize("Cập nhật người dùng", "Cập nhật");
+		updateDialog.initialize("Cập nhật bãi xe", "Cập nhật");
 
 		createDialog = new OptionPane<>(User.getCreateFields());
-		createDialog.initialize("Thêm người dùng", "Thêm");
+		createDialog.initialize("Thêm bãi xe", "Thêm");
 
-
+		
 		this.add(table, BorderLayout.CENTER);
 	}
+	
 
 	private class UpdateEvent extends AbstractAction {
 		private static final long serialVersionUID = 1L;
@@ -81,17 +79,16 @@ public class UserManager extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
-
-			if (bean instanceof User) {
-				User user = (User) bean;
-				updateDialog.updateDate(user);
+			
+			if (bean instanceof Park) {
+				updateDialog.updateDate( (Park) bean);
 			}
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
-				userController.onUpdate(user);
+				Park park = mapper.convertValue(result, Park.class);
+				parkController.onUpdate(park);
 			}
 		}
 	}
@@ -102,13 +99,14 @@ public class UserManager extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
-			if (bean instanceof User) {
-				User user = (User) bean;
+			System.out.println(bean);
+			if (bean instanceof Park) {
+				Park user = (Park) bean;
 				int isDelete = JOptionPane.showConfirmDialog(null,
 						"Việc này không thể hoàn tác. Bạn có chắc chắn muốn xóa không?!", "Xóa",
 						JOptionPane.YES_NO_OPTION);
 				if (isDelete == JOptionPane.YES_OPTION) {
-					userController.onDelete(user);
+					parkController.onDelete(user);
 				}
 			}
 		}
@@ -122,9 +120,10 @@ public class UserManager extends JPanel {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
 				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
-				userController.onCreate(user);
+				Park park = mapper.convertValue(result, Park.class);
+				parkController.onCreate(park);
 			}
 		}
 	}
+	
 }

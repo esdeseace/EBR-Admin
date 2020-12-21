@@ -1,15 +1,23 @@
 package main;
 
 import java.awt.EventQueue;
+import java.awt.desktop.SystemSleepEvent;
+
 import javax.swing.JFrame;
 
 import com.github.weisj.darklaf.LafManager;
 //import com.github.weisj.darklaf.theme.DarculaTheme;
 
+
+import api.ParkApi;
+
+import beans.Park;
+
 import common.Constants;
 import panels.RootPane;
 
 public class AdminMain {
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -27,6 +35,7 @@ public class AdminMain {
 
 	public AdminMain() {
 		initialize();
+		System.out.println(ParkApi.getAllParks());
 	}
 
 	private void initialize() {
