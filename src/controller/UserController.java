@@ -8,6 +8,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import api.UserApi;
 import beans.Bike;
 import beans.ResponseCustom;
 import beans.User;
@@ -25,62 +26,26 @@ public class UserController implements IController<User> {
 	@Override
 	public User onCreate(User user) {
 		System.out.print(user);
-		WebTarget webTarget = client.target(PATH).path("users");
-
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
-
-		if (res.getStatus() == 1) {
-			return res.getT();
-		}
-		return null;
+		return UserApi.add(user);
 	}
 
 	@Override
 	public User onRead(User user) {
-		System.out.print(user);
-		WebTarget webTarget = client.target(PATH).path("users").path(user.getId());
-
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
-
-		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
-		if (res.getStatus() == 1) {
-			return res.getT();
-		}
-		return null;
+		System.out.println(user);
+		return user;
 	}
 
 	@Override
 	public User onUpdate(User user) {
 		System.out.println(user);
-		WebTarget webTarget = client.target(PATH).path("users").path(user.getId());
-
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
-		if (res.getStatus() == 1) {
-			return res.getT();
-		}
-		return null;
+		
+		return UserApi.update(user);
 	}
 
 	@Override
 	public boolean onDelete(User user) {
-		WebTarget webTarget = client.target(PATH).path("users").path(user.getId());
-
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.delete();
-
-		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
-
-		if (res.getStatus() == 1) {
-			return true;
-		}
-		return false;
+		System.out.println(user);
+		return UserApi.delete(user.getId());
 	}
 
 }

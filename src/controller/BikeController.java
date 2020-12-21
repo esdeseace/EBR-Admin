@@ -28,7 +28,7 @@ public class BikeController implements IController<Bike> {
 
 	@Override
 	public Bike onCreate(Bike bike) {
-		WebTarget webTarget = client.target(PATH).path("bikes").path(bike.getId());
+		WebTarget webTarget = client.target(PATH).path("bikes");
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(bike, MediaType.APPLICATION_JSON));

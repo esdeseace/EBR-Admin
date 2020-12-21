@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("park")
 public class Park {
-	private int id; // id bãi xe
+	private String id; // id bãi xe
 	private String parkName; // Tên bãi xe
 	private String address; // Địa chỉ
 	private int capacity; // Sức chứa của xe trong bãi 
@@ -19,7 +19,7 @@ public class Park {
 		super();
 	}
 	
-	public Park(int id, String parkName, String address, int capacity, int numBikes, int numEBikes,
+	public Park(String id, String parkName, String address, int capacity, int numBikes, int numEBikes,
 			int numTwinBike) {
 		
 		this.id = id;
@@ -34,7 +34,7 @@ public class Park {
 	
 	
 	
-	public Park(int id, String parkName, String address, int capacity, int numBikes, int numEBikes, int numTwinBike,
+	public Park(String id, String parkName, String address, int capacity, int numBikes, int numEBikes, int numTwinBike,
 			int numRentedBike, int numRentedEBike, int numRentedTwinBike) {
 		this.id = id;
 		this.parkName = parkName;
@@ -60,18 +60,20 @@ public class Park {
 		return fields;
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getParkName() {
 		return parkName;
 	}
 	public void setParkName(String parkName) {
 		this.parkName = parkName;
 	}
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getAddress() {
 		return address;
 	}

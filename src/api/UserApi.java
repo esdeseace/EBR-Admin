@@ -9,6 +9,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.ResponseCustom;
 import beans.User;
 import common.Constants;
 
@@ -30,24 +31,46 @@ public class UserApi {
 			return new ArrayList<>();
 		}
 	}
-
-	public User update(User user) {
-		try {
-			WebTarget webTarget = Constants.client.target(Constants.PATH).path("books").path(user.getId());
+	public static User add(User user) {
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 			Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-			User res = response.readEntity(User.class);
-			return res;
-		} catch (Exception e) {
-			e.printStackTrace();
+			ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
+
+			if (res.getStatus() == 1) {
+				return res.getT();
+			}
 			return null;
-		}
 	}
 
-	public boolean delete(int id) {
-		return true;
+	public static User update(User user) {
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(user.getId());
+
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
+		if (res.getStatus() == 1) {
+			return res.getT();
+		}
+		return null;
+	}
+
+	public static boolean delete(String id) {
+		System.out.println(id);
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(id);
+
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.delete();
+
+		ResponseCustom<User> res = response.readEntity(ResponseCustom.class);
+
+		if (res.getStatus() == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }
