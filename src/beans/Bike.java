@@ -13,8 +13,8 @@ public class Bike {
 	
 	private String id;
 	private String name;
-	private String idPark;
-	private String idUser;
+//	private Park park;
+	private User user;
 	private String type;
 	private int weight;
 	private String license_plate;
@@ -47,7 +47,6 @@ public class Bike {
 		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
-		
 	}
 
 	public static LinkedHashMap<String, String> getFields() {
@@ -60,6 +59,9 @@ public class Bike {
 		fields.put("manu_date", "Ngày sản xuất");
 //		fields.put("rented_date", "Ngày thuê");
 //		fields.put("return_date", "Ngày trả");
+//		fields.put("u", "Nguời dùng");
+		
+//		fields.put("park", "Bãi đỗ xe");
 		fields.put("producer", "Nhà sản xuất");
 		fields.put("cost", "Giá");
 		fields.put("status", "Trạng thái");
@@ -117,21 +119,13 @@ public class Bike {
 		this.name = name;
 	}
 
-	public String getIdPark() {
-		return idPark;
-	}
-
-	public void setIdPark(String idPark) {
-		this.idPark = idPark;
-	}
-
-	public String getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(String idUser) {
-		this.idUser = idUser;
-	}
+//	public String getIdPark() {
+//		return idPark;
+//	}
+//
+//	public void setIdPark(String idPark) {
+//		this.idPark = idPark;
+//	}
 
 	public String getType() {
 		return type;
@@ -206,6 +200,12 @@ public class Bike {
 	}
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
