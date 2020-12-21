@@ -3,29 +3,37 @@ package panels;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import api.ParkApi;
-import api.UserApi;
+
 import beans.Park;
 import beans.User;
 import common.Constants;
 import components.CRUDTable;
+import components.OptionPane;
 import controller.ParkController;
-import controller.UserController;
-import dialog.Dialog;
+
+
+
 
 
 
 public class ParkManager extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private CRUDTable<Park> table;
+
+	private CRUDTable<User> table;
 	private ParkController parkController;
-	private Dialog<Park> updateDialog;
-	private Dialog<Park> createDialog;
+	private OptionPane<Park> updateDialog;
+	private OptionPane<Park> createDialog;
+
 	
 	public ParkManager() {
 		super();
@@ -44,21 +52,22 @@ public class ParkManager extends JPanel {
 		names.add(Constants.UPDATE);
 		names.add(Constants.DELETE);
 
-		ArrayList<Action> events = new ArrayList<>();
-		events.add(new UpdateEvent());
-		events.add(new DeleteEvent());
+		LinkedHashMap<String, Action> events = new LinkedHashMap<>();
+		events.put(Constants.UPDATE, new UpdateEvent());
+		events.put(Constants.DELETE, new DeleteEvent());
 
-		table = new CRUDTable<>(User.getFields());
-		table.initialize(names, events, new CreateEvent());
+		table = new CRUDTable<>(Park.getFields());
+		table.initialize(events, new CreateEvent());
 
 		parkController = new ParkController();
 		table.updateData(ParkApi.getAllParks());
 
-		updateDialog = new Dialog<>(User.getUpdateFields());
+		updateDialog = new OptionPane<>(User.getUpdateFields());
 		updateDialog.initialize("Cập nhật bãi xe", "Cập nhật");
 
-		createDialog = new Dialog<>(User.getCreateFields());
+		createDialog = new OptionPane<>(User.getCreateFields());
 		createDialog.initialize("Thêm bãi xe", "Thêm");
+
 		
 		this.add(table, BorderLayout.CENTER);
 	}
@@ -70,12 +79,17 @@ public class ParkManager extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
-			System.out.println(bean);
+			
 			if (bean instanceof Park) {
-				updateDialog.updateDate((Park) bean);
+				updateDialog.updateDate( (Park) bean);
 			}
-			updateDialog.setModal(true);
-			updateDialog.setVisible(true);
+
+			LinkedHashMap<String, String> result = updateDialog.showDialog();
+			if (result != null) {
+				ObjectMapper mapper = new ObjectMapper();
+				Park park = mapper.convertValue(result, Park.class);
+				parkController.onUpdate(park);
+			}
 		}
 	}
 
@@ -86,6 +100,15 @@ public class ParkManager extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
 			System.out.println(bean);
+			if (bean instanceof Park) {
+				Park user = (Park) bean;
+				int isDelete = JOptionPane.showConfirmDialog(null,
+						"Việc này không thể hoàn tác. Bạn có chắc chắn muốn xóa không?!", "Xóa",
+						JOptionPane.YES_NO_OPTION);
+				if (isDelete == JOptionPane.YES_OPTION) {
+					parkController.onDelete(user);
+				}
+			}
 		}
 	}
 
@@ -94,8 +117,12 @@ public class ParkManager extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			createDialog.setModal(true);
-			createDialog.setVisible(true);
+			LinkedHashMap<String, String> result = createDialog.showDialog();
+			if (result != null) {
+				ObjectMapper mapper = new ObjectMapper();
+				Park park = mapper.convertValue(result, Park.class);
+				parkController.onCreate(park);
+			}
 		}
 	}
 	

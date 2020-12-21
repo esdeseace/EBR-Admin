@@ -1,19 +1,13 @@
 package components;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.Action;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -35,13 +29,18 @@ public class ButtonCell {
 
 	private class ButtonsRenderer implements TableCellRenderer {
 
-		private final ButtonPane panel = new ButtonPane();
+		private final ButtonPane button = new ButtonPane();
+		private final JLabel label = new JLabel(buttonName, SwingConstants.CENTER);
 
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
-			panel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-			return panel;
+			if (isSelected) {
+				return label;
+			} else {
+				button.setText(buttonName);
+				return button;
+			}
 		}
 	}
 
@@ -49,13 +48,13 @@ public class ButtonCell {
 
 		private static final long serialVersionUID = 1L;
 
-		private final ButtonPane panel = new ButtonPane();
+		private final ButtonPane button = new ButtonPane();
 
 		@Override
 		public Component getTableCellEditorComponent(JTable tbl, Object value, boolean isSelected, int row,
 				int column) {
-			panel.setBackground(tbl.getSelectionBackground());
-			return panel;
+			button.setText(buttonName);
+			return button;
 		}
 
 		@Override
@@ -65,23 +64,15 @@ public class ButtonCell {
 
 	}
 
-	private class ButtonPane extends JPanel {
+	private class ButtonPane extends JButton {
 
 		private static final long serialVersionUID = 1L;
 
-		public final JButton button;
-
 		public ButtonPane() {
-
-			setOpaque(true);
-			setLayout(new BorderLayout());
-
-			button = new JButton(buttonName);
-			button.setFont(new Font("Calibri", Font.BOLD, 17));
-			button.setFocusable(false);
-			button.setRolloverEnabled(false);
-			button.setAction(action);
-			add(button, BorderLayout.CENTER);
+			super(buttonName);
+			this.setFocusable(false);
+			this.setRolloverEnabled(false);
+			this.setAction(action);
 		}
 	}
 }

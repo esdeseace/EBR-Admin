@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
-import api.BikeApi;
 import beans.Bike;
 import interfaces.IController;
 
