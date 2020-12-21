@@ -1,33 +1,32 @@
 package controller;
 
-import java.util.ArrayList;
-
-import api.UserApi;
 import beans.User;
 import interfaces.IController;
 
 public class UserController implements IController<User> {
 
 	@Override
-	public void onCreate(User user) {
-
+	public User onCreate(User user) {
+		System.out.println(user);
+		return user;
 	}
 
 	@Override
-	public void onRead(User user) {
+	public User onRead(User user) {
 		System.out.println(user);
+		return user;
 	}
 
 	@Override
-	public void onUpdate(User user) {
+	public User onUpdate(User user) {
 		System.out.println(user);
-//		UpdateDialog updateDialog = new UpdateDialog();
-//		updateDialog.setVisible(true);
+		return user;
 	}
 
 	@Override
-	public void onDelete(User user) {
+	public boolean onDelete(User user) {
 		System.out.println(user);
+		return false;
 	}
 
 }
