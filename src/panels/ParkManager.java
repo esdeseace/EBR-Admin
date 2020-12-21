@@ -24,7 +24,7 @@ import controller.ParkController;
 public class ParkManager extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private CRUDTable<User> table;
+	private CRUDTable<Park> table;
 	private ParkController parkController;
 	private OptionPane<Park> updateDialog;
 	private OptionPane<Park> createDialog;
@@ -38,15 +38,7 @@ public class ParkManager extends JPanel {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 
-		ArrayList<Park> data = ParkApi.getAllParks();
-		ParkController parkController = new ParkController();
-		CRUDTable<Park> table = new CRUDTable<>( Park.getFields());
-//		System.out.println(data);
-
-		ArrayList<String> names = new ArrayList<>();
-		names.add(Constants.UPDATE);
-		names.add(Constants.DELETE);
-
+		
 		LinkedHashMap<String, Action> events = new LinkedHashMap<>();
 		events.put(Constants.UPDATE, new UpdateEvent());
 		events.put(Constants.DELETE, new DeleteEvent());

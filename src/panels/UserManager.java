@@ -2,22 +2,14 @@ package panels;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-
-import org.glassfish.jersey.spi.Contract;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 
 import api.UserApi;
 import beans.User;
@@ -43,18 +35,6 @@ public class UserManager extends JPanel {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 
-
-		ArrayList<User> data = UserApi.getAll();
-		UserController userController = new UserController();
-		CRUDTable<User> table = new CRUDTable<User>(User.getFields());
-//		System.out.println(data);
-
-		ArrayList<String> names = new ArrayList<>();
-		names.add(Constants.UPDATE);
-		names.add(Constants.DELETE);
-
-		
-
 		LinkedHashMap<String, Action> events = new LinkedHashMap<>();
 		events.put(Constants.UPDATE, new UpdateEvent());
 		events.put(Constants.DELETE, new DeleteEvent());
@@ -70,7 +50,6 @@ public class UserManager extends JPanel {
 
 		createDialog = new OptionPane<>(User.getCreateFields());
 		createDialog.initialize("Thêm người dùng", "Thêm");
-
 
 		this.add(table, BorderLayout.CENTER);
 	}
@@ -89,9 +68,14 @@ public class UserManager extends JPanel {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
-				userController.onUpdate(user);
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					User user = mapper.convertValue(result, User.class);
+					userController.onUpdate(user);
+				} catch (Exception error) {
+					error.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}
@@ -108,7 +92,13 @@ public class UserManager extends JPanel {
 						"Việc này không thể hoàn tác. Bạn có chắc chắn muốn xóa không?!", "Xóa",
 						JOptionPane.YES_NO_OPTION);
 				if (isDelete == JOptionPane.YES_OPTION) {
-					userController.onDelete(user);
+					try {
+						userController.onDelete(user);
+						table.updateData(UserApi.getAll());
+					} catch (Exception error) {
+						error.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		}
@@ -118,12 +108,18 @@ public class UserManager extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
-				userController.onCreate(user);
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					User user = mapper.convertValue(result, User.class);
+					userController.onCreate(user);
+					table.updateData(UserApi.getAll());
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}
