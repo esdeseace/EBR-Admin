@@ -106,6 +106,9 @@ public class CRUDTable<T> extends JPanel {
 
 			tableModel.addRow(values.toArray());
 		}
+		
+		table.repaint();
+		table.revalidate();
 	}
 
 	private void addButtonCell(String name, int position, Action action) {

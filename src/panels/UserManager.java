@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +41,7 @@ public class UserManager extends JPanel {
 		table = new CRUDTable<>(User.getFields());
 		table.initialize(events, new CreateEvent());
 
-		userController = new UserController();
+		userController = new UserController(table);
 		table.updateData(UserApi.getAll());
 
 		updateDialog = new OptionPane<>(User.getUpdateFields());
@@ -68,14 +67,9 @@ public class UserManager extends JPanel {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					User user = mapper.convertValue(result, User.class);
-					userController.onUpdate(user);
-				} catch (Exception error) {
-					error.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				ObjectMapper mapper = new ObjectMapper();
+				User user = mapper.convertValue(result, User.class);
+				userController.onUpdate(user);
 			}
 		}
 	}
@@ -88,18 +82,7 @@ public class UserManager extends JPanel {
 			Object bean = table.getSelectedBean();
 			if (bean instanceof User) {
 				User user = (User) bean;
-				int isDelete = JOptionPane.showConfirmDialog(null,
-						"Việc này không thể hoàn tác. Bạn có chắc chắn muốn xóa không?!", "Xóa",
-						JOptionPane.YES_NO_OPTION);
-				if (isDelete == JOptionPane.YES_OPTION) {
-					try {
-						userController.onDelete(user);
-						table.updateData(UserApi.getAll());
-					} catch (Exception error) {
-						error.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
+				userController.onDelete(user);
 			}
 		}
 	}
@@ -111,16 +94,11 @@ public class UserManager extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					User user = mapper.convertValue(result, User.class);
-					userController.onCreate(user);
-					table.updateData(UserApi.getAll());
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Create error", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				ObjectMapper mapper = new ObjectMapper();
+				User user = mapper.convertValue(result, User.class);
+				userController.onCreate(user);
 			}
 		}
 	}
+
 }

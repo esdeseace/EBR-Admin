@@ -35,7 +35,6 @@ public class AdminMain {
 
 	public AdminMain() {
 		initialize();
-		System.out.println(ParkApi.getAllParks());
 	}
 
 	private void initialize() {
