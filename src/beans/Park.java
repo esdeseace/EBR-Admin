@@ -92,7 +92,7 @@ public class Park {
 	public static ArrayList<FieldOption> getCreateFields() {
 		ArrayList<FieldOption> fields = new ArrayList<>();
 //		fields.add(new FieldOption("id", "id", false, false))
-		fields.add(new FieldOption("park_name", "Tên bãi xe"));
+		fields.add(new FieldOption("parkName", "Tên bãi xe"));
 		fields.add(new FieldOption("address", "Địa chỉ"));
 		fields.add(new FieldOption("capacity", "Tổng số xe"));
 		fields.add(new FieldOption("numBikes", "Số xe Bikes"));
