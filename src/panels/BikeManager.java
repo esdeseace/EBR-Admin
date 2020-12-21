@@ -79,8 +79,7 @@ public class BikeManager extends JDialog {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Bike bike = mapper.convertValue(result, Bike.class);
+				Bike bike = Constants.mapper.convertValue(result, Bike.class);
 				bikeController.onUpdate(bike);
 			}
 		}
@@ -106,8 +105,7 @@ public class BikeManager extends JDialog {
 		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Bike bike = mapper.convertValue(result, Bike.class);
+				Bike bike = Constants.mapper.convertValue(result, Bike.class);
 				bikeController.onCreate(bike);
 			}
 		}

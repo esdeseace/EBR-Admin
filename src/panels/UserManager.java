@@ -69,8 +69,7 @@ public class UserManager extends JPanel {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
+				User user = Constants.mapper.convertValue(result, User.class);
 				userController.onUpdate(user);
 			}
 		}
@@ -96,8 +95,7 @@ public class UserManager extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				User user = mapper.convertValue(result, User.class);
+				User user = Constants.mapper.convertValue(result, User.class);
 				userController.onCreate(user);
 			}
 		}

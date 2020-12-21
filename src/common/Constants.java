@@ -3,6 +3,8 @@ package common;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Constants {
 	// Frame
 	public static final int WINDOW_WIDTH = 800;
@@ -21,5 +23,8 @@ public class Constants {
 	public final static String READ = "Thông tin xe";
 	public final static String UPDATE = "Sửa";
 	public final static String DELETE = "Xóa";
+
+	// Mapper
+	public final static ObjectMapper mapper = new ObjectMapper();
 
 }

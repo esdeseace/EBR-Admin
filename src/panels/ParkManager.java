@@ -73,8 +73,7 @@ public class ParkManager extends JPanel {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Park park = mapper.convertValue(result, Park.class);
+				Park park = Constants.mapper.convertValue(result, Park.class);
 				parkController.onUpdate(park);
 			}
 		}
@@ -100,8 +99,7 @@ public class ParkManager extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Park park = mapper.convertValue(result, Park.class);
+				Park park = Constants.mapper.convertValue(result, Park.class);
 				parkController.onCreate(park);
 			}
 		}

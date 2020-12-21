@@ -5,9 +5,11 @@ import java.awt.desktop.SystemSleepEvent;
 
 import javax.swing.JFrame;
 
+import com.fasterxml.jackson.databind.PropertyName;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.github.weisj.darklaf.LafManager;
 //import com.github.weisj.darklaf.theme.DarculaTheme;
-
 
 import api.ParkApi;
 
@@ -17,7 +19,6 @@ import common.Constants;
 import panels.RootPane;
 
 public class AdminMain {
-
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,6 +45,15 @@ public class AdminMain {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setTitle("EBR-Admin");
 		frame.setLocationRelativeTo(null);
+
+		Constants.mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public PropertyName findNameForSerialization(Annotated a) {
+				return null;
+			}
+		});
 
 		RootPane rootPane = new RootPane();
 		frame.setContentPane(rootPane);

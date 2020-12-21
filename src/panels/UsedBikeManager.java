@@ -73,8 +73,7 @@ public class UsedBikeManager extends JPanel {
 
 			LinkedHashMap<String, String> result = updateDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Bike park = mapper.convertValue(result, Bike.class);
+				Bike park = Constants.mapper.convertValue(result, Bike.class);
 				bikeController.onUpdate(park);
 			}
 		}
@@ -100,8 +99,7 @@ public class UsedBikeManager extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			LinkedHashMap<String, String> result = createDialog.showDialog();
 			if (result != null) {
-				ObjectMapper mapper = new ObjectMapper();
-				Bike bike = mapper.convertValue(result, Bike.class);
+				Bike bike = Constants.mapper.convertValue(result, Bike.class);
 				bikeController.onCreate(bike);
 			}
 		}
