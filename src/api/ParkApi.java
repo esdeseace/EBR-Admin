@@ -16,6 +16,7 @@ import interfaces.IApi;
 
 public class ParkApi implements IApi<Park> {
 
+	@Override
 	public ArrayList<Park> getAll() {
 		WebTarget webTarget = Constants.client.target("https://my-json-server.typicode.com/nvthong99/fakeapi/parks");
 
@@ -27,6 +28,7 @@ public class ParkApi implements IApi<Park> {
 		return res;
 	}
 
+	@Override
 	public Park add(Park park) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks");
 
@@ -41,6 +43,7 @@ public class ParkApi implements IApi<Park> {
 		return null;
 	}
 
+	@Override
 	public Park update(Park park) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks").path(park.getId());
 
@@ -54,6 +57,7 @@ public class ParkApi implements IApi<Park> {
 		return null;
 	}
 
+	@Override
 	public boolean delete(Park park) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks").path(park.getId());
 

@@ -34,7 +34,7 @@ public class AController<T> implements IController<T> {
 	@Override
 	public T onUpdate(T t) {
 		try {
-			T newT = api.add(t);
+			T newT = api.update(t);
 			table.updateData(api.getAll());
 			return newT;
 		} catch (Exception e) {

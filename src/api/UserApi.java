@@ -16,6 +16,7 @@ import interfaces.IApi;
 
 public class UserApi implements IApi<User> {
 
+	@Override
 	public ArrayList<User> getAll() {
 		try {
 			WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
@@ -33,6 +34,7 @@ public class UserApi implements IApi<User> {
 		}
 	}
 
+	@Override
 	public User add(User user) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users");
 
@@ -47,7 +49,9 @@ public class UserApi implements IApi<User> {
 		return null;
 	}
 
+	@Override
 	public User update(User user) {
+		System.out.println(user);
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(user.getId());
 
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -60,6 +64,7 @@ public class UserApi implements IApi<User> {
 		return null;
 	}
 
+	@Override
 	public boolean delete(User user) {
 		System.out.println(user);
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("users").path(user.getId());
