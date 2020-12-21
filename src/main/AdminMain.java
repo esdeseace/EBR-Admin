@@ -1,19 +1,14 @@
 package main;
 
 import java.awt.EventQueue;
-import java.awt.desktop.SystemSleepEvent;
 
 import javax.swing.JFrame;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.github.weisj.darklaf.LafManager;
-//import com.github.weisj.darklaf.theme.DarculaTheme;
-
-import api.ParkApi;
-
-import beans.Park;
 
 import common.Constants;
 import panels.RootPane;
@@ -46,14 +41,7 @@ public class AdminMain {
 		frame.setTitle("EBR-Admin");
 		frame.setLocationRelativeTo(null);
 
-		Constants.mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public PropertyName findNameForSerialization(Annotated a) {
-				return null;
-			}
-		});
+		Constants.mapper.disable(MapperFeature.USE_ANNOTATIONS);
 
 		RootPane rootPane = new RootPane();
 		frame.setContentPane(rootPane);
