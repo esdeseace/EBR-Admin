@@ -1,4 +1,4 @@
-package beans;
+package helpers;
 
 public class ResponseCustom<T> {
 	private int status;

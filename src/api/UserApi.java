@@ -9,9 +9,9 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.ResponseCustom;
 import beans.User;
 import common.Constants;
+import helpers.ResponseCustom;
 import interfaces.IApi;
 
 public class UserApi implements IApi<User> {

@@ -10,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Park;
-import beans.ResponseCustom;
 import common.Constants;
+import helpers.ResponseCustom;
 import interfaces.IApi;
 
 public class ParkApi implements IApi<Park> {

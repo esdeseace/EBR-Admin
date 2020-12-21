@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import api.BikeApi;
 
 import beans.Bike;
-import beans.ResponseCustom;
+import helpers.ResponseCustom;
 import interfaces.IController;
 
 public class BikeController implements IController<Bike> {
