@@ -11,14 +11,11 @@ import javax.swing.JPanel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import api.ParkApi;
-import api.UserApi;
 import beans.Park;
-import beans.User;
 import common.Constants;
 import components.CRUDTable;
 import components.OptionPane;
 import controller.ParkController;
-import controller.UserController;
 
 public class ParkManager extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +25,7 @@ public class ParkManager extends JPanel {
 	private OptionPane<Park> updateDialog;
 	private OptionPane<Park> createDialog;
 	private ParkApi parkApi;
+	private BikeManager bikeManager;
 
 	public ParkManager() {
 		super();
@@ -55,6 +53,8 @@ public class ParkManager extends JPanel {
 
 		createDialog = new OptionPane<>(Park.getCreateFields());
 		createDialog.initialize("Thêm bãi xe", "Thêm");
+
+		bikeManager = new BikeManager();
 
 		this.add(table, BorderLayout.CENTER);
 	}
@@ -112,12 +112,11 @@ public class ParkManager extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-//			LinkedHashMap<String, String> result = createDialog.showDialog();
-//			if (result != null) {
-//				ObjectMapper mapper = new ObjectMapper();
-//				Park park = mapper.convertValue(result, Park.class);
-//				parkController.onRead(park);
-//			}
+			Object bean = table.getSelectedBean();
+			if (bean instanceof Park) {
+				Park park = (Park) bean;
+				bikeManager.showDialog(park.getId());
+			}
 		}
 	}
 

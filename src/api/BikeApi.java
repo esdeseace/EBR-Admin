@@ -10,13 +10,21 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Bike;
+import helpers.ResponseCustom;
+import interfaces.IApi;
 import common.Constants;
 
-public class BikeApi {
+public class BikeApi implements IApi<Bike> {
 
-	public static ArrayList<Bike> getAll() {
+	private String parkId;
+
+	public void setParkId(String parkId) {
+		this.parkId = parkId;
+	}
+
+	public ArrayList<Bike> getAll() {
 		try {
-			WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes");
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes").path("fromPark").path(parkId);
 
 			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 			Response response = invocationBuilder.get();
@@ -31,23 +39,46 @@ public class BikeApi {
 		}
 	}
 
-	public Bike update(Bike bike) {
-		try {
-			WebTarget webTarget = Constants.client.target(Constants.PATH).path("books").path(bike.getId());
+	public Bike add(Bike bike) {
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes");
 
-			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-			Response response = invocationBuilder.post(Entity.entity(bike, MediaType.APPLICATION_JSON));
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(bike, MediaType.APPLICATION_JSON));
 
-			Bike res = response.readEntity(Bike.class);
-			return res;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		ResponseCustom<Bike> res = response.readEntity(ResponseCustom.class);
+
+		if (res.getStatus() == 1) {
+			return res.getT();
 		}
+		return null;
 	}
 
-	public boolean delete(int id) {
-		return true;
+	public Bike update(Bike bike) {
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes").path(bike.getId());
+
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.put(Entity.entity(bike, MediaType.APPLICATION_JSON));
+
+		ResponseCustom<Bike> res = response.readEntity(ResponseCustom.class);
+		if (res.getStatus() == 1) {
+			return res.getT();
+		}
+		return null;
+	}
+
+	public boolean delete(Bike bike) {
+		System.out.println(bike);
+		WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes").path(bike.getId());
+
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.delete();
+
+		ResponseCustom<Bike> res = response.readEntity(ResponseCustom.class);
+
+		if (res.getStatus() == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }

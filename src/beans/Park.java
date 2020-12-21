@@ -1,7 +1,10 @@
 package beans;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import helpers.FieldOption;
@@ -9,35 +12,45 @@ import helpers.FieldOption;
 @JsonTypeName("park")
 public class Park {
 	private String id; // id bãi xe
+
+	@JsonProperty("park_name")
 	private String parkName; // Tên bãi xe
+
 	private String address; // Địa chỉ
+
 	private int capacity; // Sức chứa của xe trong bãi
+
+	@JsonProperty("num_bikes")
 	private int numBikes; // Số lượng xe loại Bikes
+
+	@JsonProperty("num_e_bikes")
 	private int numEBikes; // Số lượng xe loại EBikes
+
+	@JsonProperty("num_twin_bike")
 	private int numTwinBike;// Số lượng xe loại TwinBikes
+
+	@JsonProperty("num_rented_bike")
 	private int numRentedBike; // Số lượng xe loại Bikes đã thuê
+
+	@JsonProperty("num_rented_e_bike")
 	private int numRentedEBike;// Số lượng xe loại EBikes đã thuê
+
+	@JsonProperty("num_rented_twin_bike")
 	private int numRentedTwinBike;// Số lượng xe loại TwinBikes đã thuê
+
+	@JsonProperty("created_at")
+	private Timestamp createdAt;
+
+	@JsonProperty("updated_at")
+	private Timestamp updatedAt;
 
 	public Park() {
 		super();
 	}
 
-	public Park(String id, String parkName, String address, int capacity, int numBikes, int numEBikes,
-			int numTwinBike) {
-
-		this.id = id;
-		this.parkName = parkName;
-		this.address = address;
-		this.capacity = capacity;
-		this.numBikes = numBikes;
-		this.numEBikes = numEBikes;
-		this.numTwinBike = numTwinBike;
-
-	}
-
 	public Park(String id, String parkName, String address, int capacity, int numBikes, int numEBikes, int numTwinBike,
-			int numRentedBike, int numRentedEBike, int numRentedTwinBike) {
+			int numRentedBike, int numRentedEBike, int numRentedTwinBike, Timestamp createdAt, Timestamp updatedAt) {
+		super();
 		this.id = id;
 		this.parkName = parkName;
 		this.address = address;
@@ -48,6 +61,8 @@ public class Park {
 		this.numRentedBike = numRentedBike;
 		this.numRentedEBike = numRentedEBike;
 		this.numRentedTwinBike = numRentedTwinBike;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public static LinkedHashMap<String, String> getFields() {
@@ -80,6 +95,22 @@ public class Park {
 //		fields.add(new FieldOption("password", "Mật khẩu", true, true));
 //		fields.add(new FieldOption("money", "Số dư"));
 		return fields;
+	}
+
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Timestamp updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public String getParkName() {
