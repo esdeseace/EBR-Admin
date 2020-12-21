@@ -38,6 +38,22 @@ public class BikeApi implements IApi<Bike> {
 			return new ArrayList<>();
 		}
 	}
+	public ArrayList<Bike> getAlls() {
+		try {
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes");
+
+			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+			Response response = invocationBuilder.get();
+
+			ArrayList<Bike> res = response.readEntity(new GenericType<ArrayList<Bike>>() {
+			});
+
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
 
 	public Bike add(Bike bike) {
 		WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes");

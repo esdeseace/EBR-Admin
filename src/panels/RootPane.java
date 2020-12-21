@@ -22,6 +22,7 @@ public class RootPane extends JPanel {
 
 		tabbedPane.addTab("Quản lý người dùng", null, new UserManager());
 		tabbedPane.addTab("Quản lý bãi xe", null, new ParkManager());
+//		tabbedPane.addTab("Quản lý xe đang sử dụng", null, new UsedBikeManager());
 		tabbedPane.addTab("Quản lý xe đang sử dụng", null, new UsedBikeManager());
 
 	}
