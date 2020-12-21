@@ -46,23 +46,18 @@ public class Bike {
 		super();
 	}
 
-	public Bike(String id, String name, String type, int weight, String licensePlate, Timestamp manuDate,
+	public Bike(String id, String name, String type, int weight, Park park, String licensePlate, Timestamp manuDate,
 			Timestamp rentedDate, Timestamp returnDate, String producer, int cost, int status, Timestamp createdAt,
 			Timestamp updatedAt) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.weight = weight;
-		this.licensePlate = licensePlate;
-		this.manuDate = manuDate;
-		this.rentedDate = rentedDate;
-		this.returnDate = returnDate;
-		this.producer = producer;
-		this.cost = cost;
-		this.status = status;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this(id, name, park, null, type, weight, licensePlate, manuDate, rentedDate, returnDate, producer, cost, status,
+				createdAt, updatedAt);
+	}
+
+	public Bike(String id, String name, String type, int weight, User user, String licensePlate, Timestamp manuDate,
+			Timestamp rentedDate, Timestamp returnDate, String producer, int cost, int status, Timestamp createdAt,
+			Timestamp updatedAt) {
+		this(id, name, null, user, type, weight, licensePlate, manuDate, rentedDate, returnDate, producer, cost, status,
+				createdAt, updatedAt);
 	}
 
 	public Bike(String id, String name, Park park, User user, String type, int weight, String licensePlate,
