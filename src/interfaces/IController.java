@@ -2,12 +2,12 @@ package interfaces;
 
 public interface IController<T> {
 
-	void onCreate(T t);
+	T onCreate(T t);
 
-	void onRead(T t);
+	T onRead(T t);
 
-	void onUpdate(T t);
+	T onUpdate(T t);
 
-	void onDelete(T t);
+	boolean onDelete(T t);
 
 }

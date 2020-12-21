@@ -16,8 +16,8 @@ import beans.Park;
 import common.Constants;
 import panels.RootPane;
 
+public class AdminMain {
 
-public class Main {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -25,7 +25,7 @@ public class Main {
 				try {
 //					LafManager.install(new DarculaTheme());
 					LafManager.install();
-					new Main();
+					new AdminMain();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -33,7 +33,7 @@ public class Main {
 		});
 	}
 
-	public Main() {
+	public AdminMain() {
 		initialize();
 		System.out.println(ParkApi.getAllParks());
 	}

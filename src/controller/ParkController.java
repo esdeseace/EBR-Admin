@@ -5,30 +5,31 @@ import interfaces.IController;
 
 public class ParkController implements IController<Park> {
 
-
-
 	@Override
-	public void onRead(Park t) {
+	public Park onCreate(Park t) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void onUpdate(Park t) {
+	public Park onRead(Park t) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void onDelete(Park t) {
+	public Park onUpdate(Park t) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void onCreate(Park t) {
+	public boolean onDelete(Park t) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
+
+
+
 	
 }
