@@ -8,13 +8,16 @@ import javax.swing.JFrame;
 import com.github.weisj.darklaf.LafManager;
 //import com.github.weisj.darklaf.theme.DarculaTheme;
 
-import api.ParkApi;
-import panels.RootPanel;
-import beans.Park;
-public class Main {
 
-	public static final int WINDOW_WIDTH = 800;
-	public static final int WINDOW_HEIGHT = 600;
+import api.ParkApi;
+
+import beans.Park;
+
+import common.Constants;
+import panels.RootPane;
+
+
+public class Main {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,13 +40,14 @@ public class Main {
 
 	private void initialize() {
 		JFrame frame = new JFrame();
-		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		frame.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setTitle("EBR-Admin");
+		frame.setLocationRelativeTo(null);
 
-		RootPanel rootPanel = new RootPanel();
-		frame.setContentPane(rootPanel);
+		RootPane rootPane = new RootPane();
+		frame.setContentPane(rootPane);
 		frame.setVisible(true);
 	}
 }

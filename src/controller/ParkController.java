@@ -5,11 +5,7 @@ import interfaces.IController;
 
 public class ParkController implements IController<Park> {
 
-	@Override
-	public void onCreate() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void onRead(Park t) {
@@ -25,6 +21,12 @@ public class ParkController implements IController<Park> {
 
 	@Override
 	public void onDelete(Park t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreate(Park t) {
 		// TODO Auto-generated method stub
 		
 	}

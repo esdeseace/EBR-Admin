@@ -8,37 +8,44 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
 
-import api.ParkApi;
+import api.BikeApi;
 import api.UserApi;
-import beans.Park;
+import beans.Bike;
 import beans.User;
 import common.Constants;
 import components.CRUDTable;
-import controller.ParkController;
+import controller.BikeController;
 import controller.UserController;
 import dialog.Dialog;
 
 
-
-public class ParkManager extends JPanel {
+public class BikeManager extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private CRUDTable<Park> table;
-	private ParkController parkController;
-	private Dialog<Park> updateDialog;
-	private Dialog<Park> createDialog;
+
+	private CRUDTable<Bike> table;
+	private BikeController bikeController;
+	private Dialog<Bike> updateDialog;
+	private Dialog<Bike> createDialog;
 	
-	public ParkManager() {
+	public BikeManager() {
 		super();
 		initialize();
 	}
+
+//	private void initialize() {
+//		BorderLayout layout = new BorderLayout();
+//		this.setLayout(layout);
+//
+//		CRUDTable<Bike> table = new CRUDTable<>(Bike.getFields());
+//		BikeController bikeController = new BikeController();
+//		table.setController(bikeController);
+//		table.updateData(BikeApi.getAll());
+//
+//		this.add(table, BorderLayout.CENTER);
+//	}
 	private void initialize() {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
-
-		ArrayList<Park> data = ParkApi.getAllParks();
-		ParkController parkController = new ParkController();
-		CRUDTable<Park> table = new CRUDTable<>( Park.getFields());
-//		System.out.println(data);
 
 		ArrayList<String> names = new ArrayList<>();
 		names.add(Constants.UPDATE);
@@ -48,21 +55,20 @@ public class ParkManager extends JPanel {
 		events.add(new UpdateEvent());
 		events.add(new DeleteEvent());
 
-		table = new CRUDTable<>(User.getFields());
+		table = new CRUDTable<>(Bike.getFields());
 		table.initialize(names, events, new CreateEvent());
 
-		parkController = new ParkController();
-		table.updateData(ParkApi.getAllParks());
+		bikeController = new BikeController();
+		table.updateData(BikeApi.getAll());
 
-		updateDialog = new Dialog<>(User.getUpdateFields());
-		updateDialog.initialize("Cập nhật bãi xe", "Cập nhật");
+		updateDialog = new Dialog<>(Bike.getUpdateFields());
+		updateDialog.initialize("Cập nhật xe", "Cập nhật");
 
-		createDialog = new Dialog<>(User.getCreateFields());
-		createDialog.initialize("Thêm bãi xe", "Thêm");
-		
+		createDialog = new Dialog<>(Bike.getCreateFields());
+		createDialog.initialize("Thêm xe", "Thêm");
+
 		this.add(table, BorderLayout.CENTER);
 	}
-	
 
 	private class UpdateEvent extends AbstractAction {
 		private static final long serialVersionUID = 1L;
@@ -71,8 +77,8 @@ public class ParkManager extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
 			System.out.println(bean);
-			if (bean instanceof Park) {
-				updateDialog.updateDate((Park) bean);
+			if (bean instanceof Bike) {
+				updateDialog.updateDate((Bike) bean);
 			}
 			updateDialog.setModal(true);
 			updateDialog.setVisible(true);
@@ -98,5 +104,4 @@ public class ParkManager extends JPanel {
 			createDialog.setVisible(true);
 		}
 	}
-	
 }
