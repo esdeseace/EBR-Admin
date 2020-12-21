@@ -1,17 +1,20 @@
 package beans;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import helpers.FieldOption;
 
 @JsonTypeName("bike")
 public class Bike {
 	
 	private String id;
 	private String name;
-//	private String idPark;
-//	private String idUser;
+	private String idPark;
+	private String idUser;
 	private String type;
 	private int weight;
 	private String license_plate;
@@ -65,6 +68,39 @@ public class Bike {
 		return fields;
 	}
 
+	public static ArrayList<FieldOption> getUpdateFields() {
+		ArrayList<FieldOption> fields = new ArrayList<>();
+		fields.add(new FieldOption("id", "id", false, false));
+		fields.add(new FieldOption("name", "Tên xe"));
+		fields.add(new FieldOption("type", "Loại xe"));
+		fields.add(new FieldOption("weight", "Cân nặng"));
+		fields.add(new FieldOption("license_plate", "Biển số"));
+		fields.add(new FieldOption("manu_date", "Ngày sản xuất"));
+		fields.add(new FieldOption("producer", "Nhà sản xuất"));
+		fields.add(new FieldOption("cost", "Giá"));
+//		fields.add(new FieldOption("idPark", "id bãi xe"));
+//		fields.add(new FieldOption("idUser", "id người dùng"));
+		fields.add(new FieldOption("status", "Trạng thái"));
+
+		return fields;
+	}
+
+	public static ArrayList<FieldOption> getCreateFields() {
+		ArrayList<FieldOption> fields = new ArrayList<>();
+		fields.add(new FieldOption("id", "id", false, false));
+		fields.add(new FieldOption("name", "Tên xe"));
+		fields.add(new FieldOption("type", "Loại xe"));
+		fields.add(new FieldOption("weight", "Cân nặng"));
+		fields.add(new FieldOption("license_plate", "Biển số"));
+		fields.add(new FieldOption("manu_date", "Ngày sản xuất"));
+		fields.add(new FieldOption("producer", "Nhà sản xuất"));
+		fields.add(new FieldOption("cost", "Giá"));
+//		fields.add(new FieldOption("", "id bãi xe"));
+//		fields.add(new FieldOption("", "id người dùng"));
+		fields.add(new FieldOption("status", "Trạng thái"));
+		return fields;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -81,21 +117,21 @@ public class Bike {
 		this.name = name;
 	}
 
-//	public String getIdPark() {
-//		return idPark;
-//	}
-//
-//	public void setIdPark(String idPark) {
-//		this.idPark = idPark;
-//	}
-//
-//	public String getIdUser() {
-//		return idUser;
-//	}
-//
-//	public void setIdUser(String idUser) {
-//		this.idUser = idUser;
-//	}
+	public String getIdPark() {
+		return idPark;
+	}
+
+	public void setIdPark(String idPark) {
+		this.idPark = idPark;
+	}
+
+	public String getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(String idUser) {
+		this.idUser = idUser;
+	}
 
 	public String getType() {
 		return type;
