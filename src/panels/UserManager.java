@@ -22,8 +22,6 @@ public class UserManager extends JPanel {
 
 	private CRUDTable<User> table;
 	private UserController userController;
-	private OptionPane<User> updateDialog;
-	private OptionPane<User> createDialog;
 	private UserApi userApi;
 
 	public UserManager() {
@@ -46,12 +44,6 @@ public class UserManager extends JPanel {
 		userController = new UserController(table, userApi);
 		table.updateData(userApi.getAll());
 
-		updateDialog = new OptionPane<>(User.getUpdateFields());
-		updateDialog.initialize("Cập nhật người dùng", "Cập nhật");
-
-		createDialog = new OptionPane<>(User.getCreateFields());
-		createDialog.initialize("Thêm người dùng", "Thêm");
-
 		this.add(table, BorderLayout.CENTER);
 	}
 
@@ -61,15 +53,8 @@ public class UserManager extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object bean = table.getSelectedBean();
-
 			if (bean instanceof User) {
 				User user = (User) bean;
-				updateDialog.updateDate(user);
-			}
-
-			LinkedHashMap<String, String> result = updateDialog.showDialog();
-			if (result != null) {
-				User user = Constants.mapper.convertValue(result, User.class);
 				userController.onUpdate(user);
 			}
 		}
@@ -93,11 +78,7 @@ public class UserManager extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			LinkedHashMap<String, String> result = createDialog.showDialog();
-			if (result != null) {
-				User user = Constants.mapper.convertValue(result, User.class);
-				userController.onCreate(user);
-			}
+			userController.onCreate();
 		}
 	}
 

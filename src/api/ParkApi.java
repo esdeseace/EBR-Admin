@@ -18,15 +18,20 @@ public class ParkApi implements IApi<Park> {
 
 	@Override
 	public ArrayList<Park> getAll() {
-		WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks");
+		try {
+			WebTarget webTarget = Constants.client.target(Constants.PATH).path("parks");
 
-		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
+			Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+			Response response = invocationBuilder.get();
 
-		ArrayList<Park> res = response.readEntity(new GenericType<ArrayList<Park>>() {
-		});
+			ArrayList<Park> res = response.readEntity(new GenericType<ArrayList<Park>>() {
+			});
 
-		return res;
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 
 	@Override

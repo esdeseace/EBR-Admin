@@ -8,13 +8,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import api.BikeApi;
 import beans.Bike;
 import common.Constants;
 import components.CRUDTable;
-import components.OptionPane;
 import controller.BikeController;
 
 public class UsedBikeManager extends JPanel {
@@ -22,8 +19,6 @@ public class UsedBikeManager extends JPanel {
 
 	private CRUDTable<Bike> table;
 	private BikeController bikeController;
-	private OptionPane<Bike> updateDialog;
-	private OptionPane<Bike> createDialog;
 	private BikeApi bikeApi;
 	private BikeManager bikeManager;
 
@@ -48,12 +43,6 @@ public class UsedBikeManager extends JPanel {
 		bikeController = new BikeController(table, bikeApi);
 		table.updateData(bikeApi.getAlls());
 
-		updateDialog = new OptionPane<>(Bike.getUpdateFields());
-		updateDialog.initialize("Cập nhật xe", "Cập nhật");
-
-		createDialog = new OptionPane<>(Bike.getCreateFields());
-		createDialog.initialize("Thêm xe", "Thêm");
-
 		bikeManager = new BikeManager();
 
 		this.add(table, BorderLayout.CENTER);
@@ -68,14 +57,9 @@ public class UsedBikeManager extends JPanel {
 
 			if (bean instanceof Bike) {
 				Bike bike = (Bike) bean;
-				updateDialog.updateDate(bike);
+				bikeController.onUpdate(bike);
 			}
 
-			LinkedHashMap<String, String> result = updateDialog.showDialog();
-			if (result != null) {
-				Bike park = Constants.mapper.convertValue(result, Bike.class);
-				bikeController.onUpdate(park);
-			}
 		}
 	}
 
@@ -97,11 +81,7 @@ public class UsedBikeManager extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			LinkedHashMap<String, String> result = createDialog.showDialog();
-			if (result != null) {
-				Bike bike = Constants.mapper.convertValue(result, Bike.class);
-				bikeController.onCreate(bike);
-			}
+			bikeController.onCreate();
 		}
 	}
 

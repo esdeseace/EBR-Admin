@@ -38,6 +38,7 @@ public class BikeApi implements IApi<Bike> {
 			return new ArrayList<>();
 		}
 	}
+
 	public ArrayList<Bike> getAlls() {
 		try {
 			WebTarget webTarget = Constants.client.target(Constants.PATH).path("bikes");

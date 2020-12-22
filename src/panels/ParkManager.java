@@ -8,13 +8,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import api.ParkApi;
 import beans.Park;
 import common.Constants;
 import components.CRUDTable;
-import components.OptionPane;
 import controller.ParkController;
 
 public class ParkManager extends JPanel {
@@ -22,8 +19,6 @@ public class ParkManager extends JPanel {
 
 	private CRUDTable<Park> table;
 	private ParkController parkController;
-	private OptionPane<Park> updateDialog;
-	private OptionPane<Park> createDialog;
 	private ParkApi parkApi;
 	private BikeManager bikeManager;
 
@@ -48,12 +43,6 @@ public class ParkManager extends JPanel {
 		parkController = new ParkController(table, parkApi);
 		table.updateData(parkApi.getAll());
 
-		updateDialog = new OptionPane<>(Park.getUpdateFields());
-		updateDialog.initialize("Cập nhật bãi xe", "Cập nhật");
-
-		createDialog = new OptionPane<>(Park.getCreateFields());
-		createDialog.initialize("Thêm bãi xe", "Thêm");
-
 		bikeManager = new BikeManager();
 
 		this.add(table, BorderLayout.CENTER);
@@ -68,12 +57,6 @@ public class ParkManager extends JPanel {
 
 			if (bean instanceof Park) {
 				Park park = (Park) bean;
-				updateDialog.updateDate(park);
-			}
-
-			LinkedHashMap<String, String> result = updateDialog.showDialog();
-			if (result != null) {
-				Park park = Constants.mapper.convertValue(result, Park.class);
 				parkController.onUpdate(park);
 			}
 		}
@@ -97,11 +80,7 @@ public class ParkManager extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			LinkedHashMap<String, String> result = createDialog.showDialog();
-			if (result != null) {
-				Park park = Constants.mapper.convertValue(result, Park.class);
-				parkController.onCreate(park);
-			}
+			parkController.onCreate();
 		}
 	}
 
